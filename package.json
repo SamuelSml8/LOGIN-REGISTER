@@ -1,0 +1,23 @@
+{
+  "name": "login-register",
+  "version": "1.0.0",
+  "description": "Taller Miércoles: Crear 2 formularios, uno de registro y otro de login, con sus respectivos métodos y rutas, usando las librerías bcrypt, passport, passport-jwt y jsonwebtokens, agregarlo a la estructura de directorios que venían usando.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx nodemon ./src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.18.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.5.0",
+    "mongoose": "^8.2.2",
+    "nodemon": "^3.1.0",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1"
+  }
+}
