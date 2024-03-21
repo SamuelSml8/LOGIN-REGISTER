@@ -14,7 +14,7 @@ const strategy = new Strategy(
       const emplooyeFound = await Emplooye.findById({ userId: jwtPayload.id });
 
       if (!emplooyeFound) {
-        const error = new Error("User not found");
+        const error = new Error("Emplooye not found");
         console.log(error);
       }
 

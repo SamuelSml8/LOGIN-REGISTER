@@ -1,5 +1,7 @@
 const Emplooye = require("../models/emplooyeModel.js");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const jwt_Secret = "%$&#*345sd<#$%&?";
 
 const registerEmplooye = async (req, res) => {
   try {
@@ -32,7 +34,7 @@ const registerEmplooye = async (req, res) => {
       data: savedEmplooye,
     });
   } catch (error) {
-    console.log("Error ____ emplooye ", error);
+    console.log("Error registering emplooye ", error);
     res.status(500).json({
       ok: false,
       message: "Error Internal Server",
@@ -43,8 +45,42 @@ const registerEmplooye = async (req, res) => {
 
 const loginEmplooye = async (req, res) => {
   try {
+    const { email, password } = req.body;
+    const emplooyeFound = await Emplooye.findOne({ email: email });
+
+    if (!emplooyeFound) {
+      return res.status(404).json({
+        ok: false,
+        message: "EMAIL or password incorrect",
+        data: null,
+      });
+    }
+
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      emplooyeFound.password
+    );
+
+    if (!isPasswordValid) {
+      return res.status(400).json({
+        ok: false,
+        message: "Email or PASSWORD incorrect",
+        data: null,
+      });
+    }
+
+    const token = jwt.sign({ userId: emplooyeFound.userId }, jwt_Secret, {
+      expiresIn: "1h",
+    });
+
+    res.status(200).json({
+      ok: true,
+      message: "User login succesfully",
+      token: token,
+      data: emplooyeFound,
+    });
   } catch (error) {
-    console.log("Error ____ emplooye ", error);
+    console.log("Error in login emplooye ", error);
     res.status(500).json({
       ok: false,
       message: "Error Internal Server",
